@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A daily view of the 2026–27 Attleboro Public Schools calendar." />
+    <title>APS Calendar · 2026–27</title>
+    <style>
+      :root { --navy:#062b52; --blue:#0c5da5; --sky:#e7f2ff; --gold:#f6bd3a; --ink:#12263a; --muted:#637386; --line:#d9e3ed; --paper:#f7fafc; --white:#fff; --red:#b42332; }
+      * { box-sizing:border-box; }
+      body { margin:0; min-width:320px; color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:linear-gradient(135deg,#eaf4ff 0%,var(--paper) 45%,#fff7df 100%); }
+      main { width:min(1120px,calc(100% - 32px)); margin:auto; padding:48px 0 56px; }
+      .eyebrow { margin:0 0 9px; color:var(--blue); font-size:.78rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+      h1 { margin:0; color:var(--navy); font-size:clamp(2.2rem,6vw,4.6rem); line-height:.96; letter-spacing:-.065em; }
+      .intro { max-width:640px; margin:17px 0 34px; color:var(--muted); font-size:1.06rem; line-height:1.55; }
+      .today-bar { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:16px 20px; color:white; background:var(--navy); border-radius:18px 18px 0 0; }
+      .today-label { display:block; opacity:.72; font-size:.75rem; font-weight:750; letter-spacing:.1em; text-transform:uppercase; }
+      .today-date { display:block; margin-top:3px; font-size:1.15rem; font-weight:750; }
+      .year-tag { padding:7px 11px; color:var(--navy); background:var(--gold); border-radius:999px; font-size:.76rem; font-weight:850; white-space:nowrap; }
+      .hero-grid { display:grid; grid-template-columns:1.1fr .9fr; overflow:hidden; background:var(--white); border:1px solid var(--line); border-top:0; border-radius:0 0 18px 18px; box-shadow:0 20px 48px rgba(13,48,80,.10); }
+      .countdown { padding:32px; border-right:1px solid var(--line); }
+      .countdown-number { display:block; color:var(--navy); font-size:clamp(4.2rem,10vw,7.4rem); font-weight:850; line-height:.86; letter-spacing:-.08em; }
+      .countdown-label { margin:10px 0 0; font-size:1.1rem; font-weight:800; }
+      .countdown-note { margin:7px 0 0; color:var(--muted); font-size:.91rem; line-height:1.5; }
+      .event-card { margin:24px; padding:26px; background:var(--sky); border-radius:14px; }
+      .event-card .eyebrow { margin-bottom:12px; }
+      .event-card h2 { margin:0; color:var(--navy); font-size:clamp(1.3rem,3vw,1.8rem); letter-spacing:-.04em; }
+      .event-card p { margin:9px 0 0; color:#42617e; line-height:1.55; }
+      .event-card.no-school { background:#fff0ef; }
+      .event-card.no-school .eyebrow, .event-card.no-school h2 { color:var(--red); }
+      .calendar-section { margin-top:30px; padding:28px; background:rgba(255,255,255,.87); border:1px solid var(--line); border-radius:18px; box-shadow:0 16px 36px rgba(13,48,80,.06); }
+      .section-head { display:flex; align-items:baseline; justify-content:space-between; gap:15px; margin-bottom:22px; }
+      .section-head h2 { margin:0; color:var(--navy); font-size:1.55rem; letter-spacing:-.04em; }
+      .section-head p { margin:0; color:var(--muted); font-size:.88rem; }
+      .weekdays,.days { display:grid; grid-template-columns:repeat(7,1fr); gap:7px; }
+      .weekdays { margin-bottom:7px; color:var(--muted); font-size:.72rem; font-weight:800; letter-spacing:.07em; text-align:center; text-transform:uppercase; }
+      .day { position:relative; display:flex; min-height:82px; flex-direction:column; align-items:flex-start; padding:11px; border:1px solid #e4ebf1; border-radius:10px; background:#fff; }
+      .day.empty { visibility:hidden; }
+      .day.past { opacity:.48; background:#f4f6f8; }
+      .day.past .day-number { text-decoration:line-through; }
+      .day.today { border:2px solid var(--blue); box-shadow:0 0 0 3px #d8ebff; }
+      .day.no-school { background:#fff3f1; border-color:#f6cec8; }
+      .day.event:not(.no-school) { background:#f0f7ff; border-color:#c9e3fb; }
+      .day-number { font-size:1rem; font-weight:800; }
+      .marker { display:block; width:7px; height:7px; margin-top:auto; border-radius:50%; background:var(--blue); }
+      .no-school .marker { background:var(--red); }
+      .legend { display:flex; flex-wrap:wrap; gap:15px; margin-top:18px; color:var(--muted); font-size:.82rem; }
+      .legend span { display:flex; align-items:center; gap:6px; }.legend i{width:9px;height:9px;border-radius:50%;background:var(--blue)}.legend i.red{background:var(--red)}.legend i.gray{background:#aab6c2}
+      .upcoming { margin-top:22px; padding-top:20px; border-top:1px solid var(--line); }
+      .upcoming h3 { margin:0 0 12px; color:var(--navy); font-size:1rem; }
+      .upcoming-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+      .upcoming-item { padding:12px; border-left:3px solid var(--blue); background:#f8fbfe; border-radius:0 8px 8px 0; }
+      .upcoming-item.no-school { border-left-color:var(--red); background:#fff7f6; }
+      .upcoming-item time { display:block; color:var(--muted); font-size:.75rem; font-weight:800; }.upcoming-item span { display:block; margin-top:3px; font-size:.89rem; font-weight:700; line-height:1.35; }
+      footer { margin-top:24px; color:var(--muted); font-size:.79rem; line-height:1.55; }
+      footer a { color:var(--blue); }
+      @media (max-width:700px) { main{width:min(100% - 24px,1120px);padding-top:25px}.hero-grid{grid-template-columns:1fr}.countdown{padding:26px;border-right:0;border-bottom:1px solid var(--line)}.event-card{margin:18px}.calendar-section{padding:18px}.day{min-height:63px;padding:8px}.weekdays,.days{gap:4px}.marker{width:6px;height:6px}.section-head{align-items:flex-start;flex-direction:column;gap:5px} }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Attleboro Public Schools</p>
+      <h1>School, at a glance.</h1>
+      <p class="intro">A simple daily view of the 2026–27 district calendar: today’s date, the days of school remaining, and what is happening now.</p>
+      <section aria-label="Today's school calendar">
+        <div class="today-bar"><div><span class="today-label">Today</span><span class="today-date" id="today-date"></span></div><span class="year-tag">2026–27 SCHOOL YEAR</span></div>
+        <div class="hero-grid">
+          <div class="countdown"><span class="countdown-number" id="days-left">—</span><p class="countdown-label">school days left</p><p class="countdown-note" id="countdown-note"></p></div>
+          <article class="event-card" id="event-card"><p class="eyebrow" id="event-label">Today at APS</p><h2 id="event-title">Loading today’s schedule…</h2><p id="event-detail"></p></article>
+        </div>
+      </section>
+      <section class="calendar-section" aria-labelledby="month-title"><div class="section-head"><h2 id="month-title">This month</h2><p>Past days are crossed out.</p></div><div class="weekdays" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div><div class="days" id="month-grid"></div><div class="legend"><span><i></i> District event</span><span><i class="red"></i> No school</span><span><i class="gray"></i> Day completed</span></div><div class="upcoming"><h3>Coming up</h3><div class="upcoming-list" id="upcoming-list"></div></div></section>
+      <footer>Calendar information is based on the <a href="https://www.attleboroschools.com/documents/calendar/16723728" target="_blank" rel="noopener noreferrer">official APS 2026–27 District Academic and Events Calendar</a>, approved March 3, 2026. The planned last day is June 24, 2027; APS notes it may move to June 16 if there are no cancellations. Confirm changes with the district.</footer>
+    </main>
+    <script>
+      const events = [
+        ['2026-08-25','Opening for Educators','event'],['2026-08-26','AHS Freshman Orientation','event'],['2026-08-26','Professional Development Day','event'],['2026-08-27','Professional Development Day','event'],['2026-08-31','First Day of School (Grades 1–12+)','event'],
+        ['2026-09-07','Labor Day','no-school'],['2026-09-08','Kindergarten Orientation','event'],['2026-09-09','First Day of School (Kindergarten)','event'],['2026-09-09','Preschool Orientation','event'],['2026-09-10','First Day of School (Preschool)','event'],['2026-09-10','HS Back to School Night','event'],['2026-09-17','MS Back to School Night','event'],['2026-09-24','AHS Senior Planning Night','event'],['2026-09-24','ES Welcome Back Night','event'],
+        ['2026-10-04','Kindergarten Information Night','event'],['2026-10-05','Early Release – District PD','event'],['2026-10-11','AHS Junior Planning Night','event'],['2026-10-12','Columbus Day','no-school'],['2026-10-29','AHS Parent Conferences','event'],
+        ['2026-11-03','No School – Professional Development Day','no-school'],['2026-11-04','ES Evening Conferences','event'],['2026-11-05','ES Early Release: Afternoon & Evening Conferences','event'],['2026-11-05','ELC Only – No School','event'],['2026-11-11','Veterans Day','no-school'],['2026-11-12','Blue Pride Night & Welcome Night 2031','event'],['2026-11-25','Thanksgiving Break','no-school'],['2026-11-26','Thanksgiving Break','no-school'],['2026-11-27','Thanksgiving Break','no-school'],
+        ['2026-12-04','Early Release for Trimester Transition','event'],['2026-12-09','MS Evening Parent Conferences','event'],['2026-12-09','ELC Open House','event'],['2026-12-10','MS Early Release: Afternoon & Evening Conferences','event'],['2026-12-10','ELC Only – No School Parent Conferences','event'],['2026-12-11','HS Only – Early Release: Building PD','event'],['2026-12-24','Holiday Break','no-school'],['2026-12-25','Holiday Break','no-school'],['2026-12-26','Holiday Break','no-school'],['2026-12-27','Holiday Break','no-school'],['2026-12-28','Holiday Break','no-school'],['2026-12-29','Holiday Break','no-school'],['2026-12-30','Holiday Break','no-school'],['2026-12-31','Holiday Break','no-school'],
+        ['2027-01-01','New Year’s Day','no-school'],['2027-01-15','Early Release – District PD','event'],['2027-01-15','ELC Only – No School: Screenings','event'],['2027-01-18','Martin Luther King Jr. Day','no-school'],
+        ['2027-02-12','Early Release – District PD','event'],['2027-02-12','ELC Only – No School: Screenings','event'],['2027-02-15','Presidents’ Day','no-school'],['2027-02-16','February Break','no-school'],['2027-02-17','February Break','no-school'],['2027-02-18','February Break','no-school'],['2027-02-19','February Break','no-school'],
+        ['2027-03-04','No School','no-school'],['2027-03-26','Good Friday','no-school'],
+        ['2027-04-08','ELC Welcome Back Night','event'],['2027-04-09','Early Release – Building PD','event'],['2027-04-09','ELC Only – No School','event'],['2027-04-19','Patriots’ Day','no-school'],['2027-04-20','April Break','no-school'],['2027-04-21','April Break','no-school'],['2027-04-22','April Break','no-school'],['2027-04-23','April Break','no-school'],
+        ['2027-05-13','AHS Awards Night','event'],['2027-05-14','K–8 Early Release – Building PD','event'],['2027-05-14','ELC Only – No School','event'],['2027-05-20','AHS Scholarship Night','event'],['2027-05-27','ACA Graduation','event'],['2027-05-31','Memorial Day','no-school'],
+        ['2027-06-04','AHS Graduation','event'],['2027-06-04','Last Day of Kindergarten','event'],['2027-06-16','Last Day of Preschool','event'],['2027-06-18','Juneteenth','no-school'],['2027-06-23','HS Only – Early Release','event'],['2027-06-24','Early Release – Last Day (Grades 1–11)','event']
+      ];
+      const eventMap = events.reduce((map,[date,title,type]) => ((map[date] ??= []).push({title,type}),map),{});
+      const fmt = new Intl.DateTimeFormat('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+      const shortFmt = new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric'});
+      const iso = date => `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+      const localDate = date => new Date(date.getFullYear(),date.getMonth(),date.getDate());
+      const start = new Date(2026,7,31), academicEnd = new Date(2027,5,16), plannedEnd = new Date(2027,5,24);
+      const noSchool = new Set(Object.entries(eventMap).filter(([,items])=>items.some(item=>item.type==='no-school')).map(([date])=>date));
+      const isSchoolDay = date => date >= start && date <= academicEnd && date.getDay() !== 0 && date.getDay() !== 6 && !noSchool.has(iso(date));
+      const today = localDate(new Date());
+      document.querySelector('#today-date').textContent = fmt.format(today);
+      const daysLeft = []; for(let d=new Date(Math.max(today,start));d<=academicEnd;d.setDate(d.getDate()+1)) if(isSchoolDay(d)) daysLeft.push(new Date(d));
+      const counter = document.querySelector('#days-left'), note = document.querySelector('#countdown-note');
+      if(today > plannedEnd) { counter.textContent='0'; note.textContent='The planned 2026–27 school year has concluded.'; } else if(today < start) { counter.textContent=daysLeft.length; note.textContent=`School begins ${fmt.format(start)}.`; } else { counter.textContent=daysLeft.length; note.textContent=`Includes today when it is a regular school day · scheduled last day: ${shortFmt.format(academicEnd)}. Weather make-up days may extend it to ${shortFmt.format(plannedEnd)}.`; }
+      const todayEvents = eventMap[iso(today)] || [];
+      const eventCard = document.querySelector('#event-card'); const eventTitle = document.querySelector('#event-title'); const eventDetail = document.querySelector('#event-detail');
+      if(todayEvents.length) { const closed=todayEvents.some(e=>e.type==='no-school'); eventCard.classList.toggle('no-school',closed); document.querySelector('#event-label').textContent=closed?'No school':'Today at APS'; eventTitle.textContent=todayEvents.map(e=>e.title).join(' · '); eventDetail.textContent=closed?'District schools are closed today.':'See the district calendar for school-specific details.'; }
+      else if(today < start || today > plannedEnd) { eventTitle.textContent='Outside the planned school year'; eventDetail.textContent='This calendar follows the 2026–27 APS district schedule.'; }
+      else if(today.getDay()===0 || today.getDay()===6) { eventTitle.textContent='Weekend'; eventDetail.textContent='No district-wide event is listed for today.'; }
+      else { eventTitle.textContent='Regular school day'; eventDetail.textContent='No district-wide event is listed for today.'; }
+      const monthStart = new Date(today.getFullYear(),today.getMonth(),1), monthEnd = new Date(today.getFullYear(),today.getMonth()+1,0); document.querySelector('#month-title').textContent=new Intl.DateTimeFormat('en-US',{month:'long',year:'numeric'}).format(today);
+      const grid=document.querySelector('#month-grid'); for(let i=0;i<monthStart.getDay();i++){const blank=document.createElement('div');blank.className='day empty';grid.append(blank)}
+      for(let n=1;n<=monthEnd.getDate();n++){const d=new Date(today.getFullYear(),today.getMonth(),n), key=iso(d), items=eventMap[key]||[], cell=document.createElement('div'); cell.className='day'; if(d<today)cell.classList.add('past');if(key===iso(today))cell.classList.add('today');if(items.length){cell.classList.add('event');if(items.some(e=>e.type==='no-school'))cell.classList.add('no-school');cell.title=items.map(e=>e.title).join(' · ')}cell.innerHTML=`<span class="day-number">${n}</span>${items.length?'<span class="marker" aria-hidden="true"></span>':''}`;grid.append(cell)}
+      const upcoming=events.filter(([date])=>new Date(`${date}T00:00:00`)>=today).slice(0,4); const list=document.querySelector('#upcoming-list');
+      if(upcoming.length) upcoming.forEach(([date,title,type])=>{const item=document.createElement('div');item.className=`upcoming-item ${type==='no-school'?'no-school':''}`;item.innerHTML=`<time>${shortFmt.format(new Date(`${date}T00:00:00`))}</time><span>${title}</span>`;list.append(item)}); else list.innerHTML='<p style="margin:0;color:var(--muted)">No more events are listed for this school year.</p>';
+    </script>
+  </body>
+</html>
